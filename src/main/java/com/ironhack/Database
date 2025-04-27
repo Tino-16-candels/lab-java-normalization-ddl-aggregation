@@ -1,0 +1,173 @@
+CREATE DATABASE ironhack_db;
+
+USE ironhack_db;
+
+#first table
+CREATE TABLE authors (
+                         id INT NOT NULL,
+                         author VARCHAR(255) NOT NULL ,
+                         PRIMARY KEY (author)
+);
+#second table
+CREATE TABLE blog
+(
+    id         INT NOT NULL AUTO_INCREMENT,
+    author     VARCHAR(255),
+    title      VARCHAR(255),
+    word_count INT,
+    views      INT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (author) REFERENCES authors (author)
+);
+INSERT INTO authors (id,author) VALUES
+                                    (1,'Maya Charlotte'),
+                                    (2,'Juan Perez'),
+                                    (3,'Gemma Alcocer');
+INSERT INTO blog (author,title,word_count,views) VALUES
+                                                     ('Maya Charlotte', 'Best Paint Color', 814,14),
+                                                     ('Juan Perez', 'Small Space Decorating Tips', 1146,221),
+                                                     ('Maya Charlotte', 'Hot Accessories', 986,105),
+                                                     ('Maya Charlotte', 'Mixing Texture', 765,22),
+                                                     ('Juan Perez', 'Kitchen Refresh', 1242,307),
+                                                     ('Maya Charlotte', 'Homemade Art Hacks', 1002,193),
+                                                     ('Gemma Alcocer', 'Refinishing Wood Floors', 1571,7542);
+#query
+#SELECT  * FROM blog;
+#DROP TABLE blog;
+#end part one----------------------------------------------------------
+#part two : normalization
+CREATE TABLE customers
+(
+id            INT NOT NULL,
+customer_name          VARCHAR(255),
+customer_status        VARCHAR(255),
+total_customer_mileage INT NOT NULL,
+flight_number          varchar(255),
+PRIMARY KEY (id),
+FOREIGN KEY (id) REFERENCES bookings(id)
+);
+#table
+CREATE TABLE flights(
+id            INT NOT NULL,
+flight_number  VARCHAR(255),
+aircraft       VARCHAR(255),
+flight_mileage INT NOT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (id) REFERENCES aircrafts(id)
+);
+#table
+CREATE TABLE aircrafts (
+id            INT NOT NULL,
+aircraft VARCHAR(255),
+flight_number VARCHAR(255),
+total_seats INT NOT NULL,
+PRIMARY KEY (id)#,
+#FOREIGN KEY (id) REFERENCES my_table(id)
+);
+#table
+CREATE TABLE bookings (
+                          id INT NOT NULL ,
+                          customer_name VARCHAR(255),
+                          flight_number VARCHAR(255),
+                          PRIMARY KEY (id),
+                          FOREIGN KEY (id) REFERENCES flights(id)
+);
+#Airline Database part
+INSERT INTO customers (id, customer_name, customer_status, total_customer_mileage,flight_number) VALUES
+                                                                                                            (1,'Agustine Riviera','silver',115235,'DL143'),
+                                                                                                            (2,'Agustine Riviera','silver',115235,'DL122'),
+                                                                                                            (3,'Alaina Sepulvida','none',6008,'DL122'),
+                                                                                                            (4,'Agustine Riviera','silver',115235,'DL143'),
+                                                                                                            (5,'Tom Jones','gold',205767,'DL122'),
+                                                                                                            (6,'Tom Jones','gold',205767,'DL53'),
+                                                                                                            (7,'Agustine Riviera','silver',115235,'DL143'),
+                                                                                                            (8,'Sam Rio','none',2653,'DL143'),
+                                                                                                            (9,'Agustine Riviera','silver',115235,'DL143'),
+                                                                                                            (10,'Tom Jones','gold',205767,'DL222'),
+                                                                                                            (11,'Jessica james','silver',127656,'DL143'),
+                                                                                                            (12,'Sam Rio','none',2653,'DL143'),
+                                                                                                            (13,'Ana Janco','silver',136773,'DL222'),
+                                                                                                            (14,'Jennifer Cortez','gold',300582,'DL222'),
+                                                                                                            (15,'Jessica james','silver',127656,'DL122'),
+                                                                                                            (16,'Sam Rio','none',2653,'DL37'),
+                                                                                                            (17,'Christian Janco','silver',14642,'DL222');
+#
+INSERT INTO flights (id, flight_number, aircraft, flight_mileage) VALUES
+                                                                              (1,'DL143','Boeing 747',135),
+                                                                              (2,'DL122','Airbus A330',4370),
+                                                                              (3,'DL122','Airbus A330',4370),
+                                                                              (4,'DL143','Boeing 747',135),
+                                                                              (5,'DL122','Airbus A330',4370),
+                                                                              (6,'DL53','Boeing 777',2078),
+                                                                              (7,'DL143','Boeing 747',135),
+                                                                              (8,'DL143','Boeing 747',135),
+                                                                              (9,'DL143','Boeing 747',135),
+                                                                              (10,'DL222','Boeing 777',1765),
+                                                                              (11,'DL143','Boeing 747',135),
+                                                                              (12,'DL143','Boeing 747',135),
+                                                                              (13,'DL222','Boeing 777',1765),
+                                                                              (14,'DL222','Boeing 777',1765),
+                                                                              (15,'DL122','Airbus A330',4370),
+                                                                              (16,'DL37','Boeing 747',531),
+                                                                              (17,'DL222','Boeing 777',1765);
+#
+INSERT INTO aircrafts (id, flight_number, aircraft, total_seats) VALUES
+                                                                              (1,'DL143','Boeing 747',400),
+                                                                              (2,'DL122','Airbus A330',236),
+                                                                              (3,'DL122','Airbus A330',236),
+                                                                              (4,'DL143','Boeing 747',400),
+                                                                              (5,'DL122','Airbus A330',236),
+                                                                              (6,'DL53','Boeing 777',264),
+                                                                              (7,'DL143','Boeing 747',400),
+                                                                              (8,'DL143','Boeing 747',400),
+                                                                              (9,'DL143','Boeing 747',400),
+                                                                              (10,'DL222','Boeing 777',264),
+                                                                              (11,'DL143','Boeing 747',400),
+                                                                              (12,'DL143','Boeing 747',400),
+                                                                              (13,'DL222','Boeing 777',264),
+                                                                              (14,'DL222','Boeing 777',264),
+                                                                              (15,'DL122','Airbus A330',236),
+                                                                              (16,'DL37','Boeing 747',400),
+                                                                              (17,'DL222','Boeing 777',264);
+#
+INSERT INTO bookings (id, customer_name, flight_number) VALUES
+                                                                              (1,'Agustine Riviera','DL143'),
+                                                                              (2,'Agustine Riviera','DL122'),
+                                                                              (3,'Alaina Sepulvida','DL122'),
+                                                                              (4,'Agustine Riviera','DL143'),
+                                                                              (5,'Tom Jones','DL122'),
+                                                                              (6,'Tom Jones','DL53'),
+                                                                              (7,'Agustine Riviera','DL143'),
+                                                                              (8,'Sam Rio','DL143'),
+                                                                              (9,'Agustine Riviera','DL143'),
+                                                                              (10,'Tom Jones','DL222'),
+                                                                              (11,'Jessica james','DL143'),
+                                                                              (12,'Sam Rio','DL143'),
+                                                                              (13,'Ana Janco','DL222'),
+                                                                              (14,'Jennifer Cortez','DL222'),
+                                                                              (15,'Jessica james','DL122'),
+                                                                              (16,'Sam Rio','DL37'),
+                                                                              (17,'Christian Janco','DL222');
+#query
+SELECT COUNT(DISTINCT flight_number) FROM flights;
+SELECT AVG(flight_mileage) FROM flights;
+SELECT AVG(total_seats) FROM aircrafts;
+SELECT customer_status, AVG(total_customer_mileage) FROM customers GROUP BY customer_status;
+SELECT customer_status, MAX(total_customer_mileage) FROM customers GROUP BY customer_status;
+SELECT COUNT(*) FROM aircrafts WHERE aircraft LIKE '%Boeing%';
+SELECT * FROM flights WHERE flight_mileage BETWEEN 300 AND 2000;
+SELECT c.customer_status, AVG(f.flight_mileage)
+FROM bookings b
+          JOIN customers c ON b.id = c.id
+          JOIN flights f ON b.flight_number = f.flight_number
+ GROUP BY c.customer_status;
+SELECT a.aircraft, COUNT(*) AS total_bookings
+ FROM bookings b
+          JOIN customers c ON b.id = c.id
+          JOIN flights f ON b.flight_number = f.flight_number
+          JOIN aircrafts a ON f.aircraft = a.aircraft
+ WHERE c.customer_status = 'Gold'
+ GROUP BY a.aircraft
+ ORDER BY total_bookings DESC
+ LIMIT 1;
+#SELECT * FROM my_table;
